@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日期时间显示</title>
+    <title>time</title>
     <style>
         body, html {
             margin: 0;
@@ -78,7 +78,7 @@
                 .then(response => response.json())
                 .then(data => {
                     const quoteElement = document.getElementById('quote');
-                    quoteElement.innerHTML = `${data.hitokoto}<small>— ${data.from}${data.from_who ? ` (${data.from_who})` : ''}</small>`;
+                    quoteElement.innerHTML = `${data.hitokoto}<small> ${data.from}${data.from_who ? ` (${data.from_who})` : ''}</small>`;
                 })
                 .catch(error => console.error('Error fetching quote:', error));
         }
