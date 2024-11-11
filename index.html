@@ -3,84 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hypooo's Awesome Website 🚀</title>
+    <title>����ʱ����ʾ</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
-            color: #333;
-        }
-        header {
-            background-color: #4CAF50;
+            height: 100%;
+            font-family: Arial, sans-serif;
             color: white;
-            padding: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+        #background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        #background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #content {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
         }
-        nav {
-            margin: 20px;
+        #time {
+            font-size: 4em;
+            margin-bottom: 0.2em;
+        }
+        #date-day {
+            font-size: 2em;
+        }
+        #quote {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             text-align: center;
-        }
-        nav a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #4CAF50;
-            font-weight: bold;
-        }
-        nav a:hover {
-            color: #3e8e41;
-        }
-        section {
-            padding: 20px;
-            text-align: center;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
+            width: 80%;
+            font-size: 1.2em;
         }
     </style>
 </head>
 <body>
+    <div id="background">
+        <img src="https://bing.img.run/rand_uhd.php" alt="�����ȡBing��ʷ��ֽUHD������ԭͼ">
+    </div>
+    <div id="content">
+        <div id="time"></div>
+        <div id="date-day"></div>
+    </div>
+    <div id="quote"></div>
 
-<header>
-    <h1>欢迎来到 hypooo 的个人网站 🌟</h1>
-</header>
+    <script>
+        function updateDateTime() {
+            const now = new Date();
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+            const dayOptions = { weekday: 'long' };
 
-<nav>
-    <a href="#about">关于我</a>
-    <a href="#projects">项目</a>
-    <a href="#contact">联系我</a>
-</nav>
+            document.getElementById('time').textContent = now.toLocaleTimeString('zh-CN', timeOptions);
+            document.getElementById('date-day').textContent = `${now.toLocaleDateString('zh-CN', dateOptions)} ${now.toLocaleDateString('zh-CN', dayOptions)}`;
+        }
 
-<section id="about">
-    <h2>关于 hypooo</h2>
-    <p>你好！我是 hypooo，一个热爱编程和创造的开发者。</p>
-    <p>我喜欢用代码解决问题，还喜欢学新东西！📚</p>
-</section>
+        function fetchQuote() {
+            fetch('https://international.v1.hitokoto.cn/')
+                .then(response => response.json())
+                .then(data => {
+                    const quoteElement = document.getElementById('quote');
+                    quoteElement.innerHTML = `${data.hitokoto}<small>�� ${data.from}${data.from_who ? ` (${data.from_who})` : ''}</small>`;
+                })
+                .catch(error => console.error('Error fetching quote:', error));
+        }
 
-<section id="projects">
-    <h2>我的项目</h2>
-    <p>正在进行中的项目：</p>
-    <ul>
-        <li>超酷的开源项目1 🚀</li>
-        <li>神秘的新网站 🤖</li>
-        <li>更多精彩敬请期待... 🔧</li>
-    </ul>
-</section>
-
-<section id="contact">
-    <h2>联系我 💬</h2>
-    <p>如果你想合作或者聊聊技术，欢迎点击下方按钮！</p>
-    <button onclick="location.href='mailto:hypooo@qq.com'">给我发邮件 ✉️</button>
-</section>
-
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        fetchQuote();
+    </script>
 </body>
 </html>
